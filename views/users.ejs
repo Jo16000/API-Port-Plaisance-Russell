@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion des Utilisateurs - Port Russell</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="user-info">
+            <!-- Informations de navigation exigées par le brief -->
+            <p>Gestion des accès de la Capitainerie</p>
+        </div>
+        <nav class="nav-menu">
+            <a href="/dashboard" class="nav-link">← Tableau de Bord</a>
+            <a href="/views/catways" class="nav-link">Gestion Catways</a>
+            <a href="/views/reservations" class="nav-link">Gestion Réservations</a>
+            <a href="/logout" class="btn-logout">Se déconnecter</a>
+        </nav>
+    </header>
+
+    <main class="content-container">
+        <h1>Gestion des Utilisateurs (Secrétariat)</h1>
+
+        <!-- SECTION ENREGISTREMENT / CRÉATION D'UN AGENT -->
+        <section class="form-section">
+            <h2>Inscrire un nouvel agent</h2>
+            <form action="/users" method="POST" class="horizontal-form">
+                <input type="text" name="username" placeholder="Nom d'utilisateur" required>
+                <input type="email" name="email" placeholder="Adresse email (unique)" required>
+                <input type="password" name="password" placeholder="Mot de passe" required minlength="6">
+                <button type="submit" class="btn-add">Créer le compte</button>
+            </form>
+        </section>
+
+        <!-- SECTION LISTE DES AGENTS ET SUPPRESSION -->
+        <section class="list-section">
+            <h2>Agents ayant accès à la capitainerie</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Nom d'utilisateur</th>
+                        <th>Adresse email</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (users.length === 0) { %>
+                        <tr><td colspan="3">Aucun agent enregistré.</td></tr>
+                    <% } else { %>
+                        <% users.forEach(agent => { %>
+                            <tr>
+                                <td><strong><%= agent.username %></strong></td>
+                                <td><%= agent.email %></td>
+                                <td>
+                                    <!-- Utilisation de method-override et de l'email dans l'URL conformément à userController_2.js -->
+                                    <form action="/users/<%= agent.email %>?_method=DELETE" method="POST" onsubmit="return confirm('Confirmez-vous la suppression définitive du compte de <%= agent.username %> ?')">
+                                        <button type="submit" class="btn-delete">Supprimer l'accès</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    <% } %>
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+</html>

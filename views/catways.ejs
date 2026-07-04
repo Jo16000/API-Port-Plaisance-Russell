@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion des Catways - Port Russell</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="main-header">
+        <nav class="nav-menu">
+            <a href="/dashboard" class="nav-link">← Tableau de Bord</a>
+            <a href="/views/reservations" class="nav-link">Gestion Réservations</a>
+            <a href="/views/users" class="nav-link">Gestion Utilisateurs</a>
+            <a href="/logout" class="btn-logout">Se déconnecter</a>
+        </nav>
+    </header>
+
+    <main class="content-container">
+        <h1>Gestion des Catways (Pontons)</h1>
+
+        <section class="form-section">
+            <h2>Enregistrer un nouveau Catway</h2>
+            <form action="/catways" method="POST" class="horizontal-form">
+                <input type="number" name="catwayNumber" placeholder="Numéro" required>
+                <select name="catwayType" required>
+                    <option value="">-- Type --</option>
+                    <option value="long">Long</option>
+                    <option value="short">Short</option>
+                </select>
+                <input type="text" name="catwayState" placeholder="État actuel" required>
+                <button type="submit" class="btn-add">Enregistrer</button>
+            </form>
+        </section>
+
+        <section class="list-section">
+            <h2>Infrastructures existantes</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Identifiant</th>
+                        <th>Type</th>
+                        <th>État de la structure (Modifier)</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% catways.forEach(catway => { %>
+                        <tr>
+                            <td><strong>N° <%= catway.catwayNumber %></strong></td>
+                            <td><span class="badge"><%= catway.catwayType %></span></td>
+                            <td>
+                                <form action="/catways/<%= catway.catwayNumber %>?_method=PUT" method="POST" class="inline-edit-form">
+                                    <input type="text" name="catwayState" value="<%= catway.catwayState %>" required>
+                                    <button type="submit" class="btn-update">Mettre à jour</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="/catways/<%= catway.catwayNumber %>?_method=DELETE" method="POST" onsubmit="return confirm('Confirmez-vous la suppression du catway n° <%= catway.catwayNumber %> ?')">
+                                    <button type="submit" class="btn-delete">Supprimer</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+</html>

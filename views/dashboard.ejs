@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Tableau de Bord - Port Russell</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="user-info">
+            <p><strong>Agent connecté :</strong> <%= user.username %> (<%= user.email %>)</p>
+            <p><strong>Date d'exploitation :</strong> <%= dateJour %></p>
+        </div>
+        <nav class="nav-menu">
+            <a href="/views/catways" class="nav-link">Gestion Catways</a>
+            <a href="/views/reservations" class="nav-link">Gestion Réservations</a>
+            <a href="/views/users" class="nav-link">Gestion Utilisateurs</a>
+            <a href="/logout" class="btn-logout">Se déconnecter</a>
+        </nav>
+    </header>
+
+    <main class="content-container">
+        <h1>Tableau de bord de la Capitainerie</h1>
+        
+        <section class="summary-section">
+            <h2>Réservations actives & amarrages en cours</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Catway N°</th>
+                        <th>Nom du Client</th>
+                        <th>Nom du Bateau</th>
+                        <th>Date d'arrivée</th>
+                        <th>Date de libération</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (reservations.length === 0) { %>
+                        <tr><td colspan="5">Aucune réservation en cours dans le port aujourd'hui.</td></tr>
+                    <% } else { %>
+                        <% reservations.forEach(res => { %>
+                            <tr>
+                                <td><span class="badge">N° <%= res.catwayNumber %></span></td>
+                                <td><%= res.clientName %></td>
+                                <td><em><%= res.boatName %></em></td>
+                                <td><%= new Date(res.startDate).toLocaleDateString('fr-FR') %></td>
+                                <td><%= new Date(res.endDate).toLocaleDateString('fr-FR') %></td>
+                            </tr>
+                        <% }) %>
+                    <% } %>
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+</html>

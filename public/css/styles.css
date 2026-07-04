@@ -1,0 +1,348 @@
+/* ==========================================================================
+   1. VARIABLES GLOBALES & THEME MARITIME (PORT RUSSELL)
+   ========================================================================== */
+:root {
+    --primary-color: #1e3a8a;    /* Bleu Marine Capitainerie */
+    --secondary-color: #3b82f6;  /* Bleu Océan */
+    --accent-color: #10b981;     /* Vert Validation / Ajout */
+    --danger-color: #ef4444;     /* Rouge Suppression / Déconnexion */
+    --bg-color: #f3f4f6;         /* Arrière-plan Gris clair */
+    --card-bg: #ffffff;
+    --text-color: #1f2937;
+    --border-color: #e5e7eb;
+    --border-radius: 6px;
+    --transition: all 0.2s ease-in-out;
+}
+
+/* Reset de base */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.5;
+}
+
+a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   2. PAGE D'ACCUEIL / CONNEXION (`index.ejs`)
+   ========================================================================== */
+.login-container {
+    max-width: 450px;
+    margin: 80px auto;
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 15px rgba(0, 0, 0, 0.03);
+    text-align: center;
+    border-top: 5px solid var(--primary-color);
+}
+
+.login-container h1 {
+    color: var(--primary-color);
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.login-container p {
+    color: #4b5563;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+/* ==========================================================================
+   3. EN-TÊTE DE NAVIGATION PRINCIPAL (`main-header`)
+   ========================================================================== */
+.main-header {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.user-info p {
+    font-size: 14px;
+    margin-bottom: 3px;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.nav-link {
+    color: #d1d5db;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.nav-link:hover {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/* ==========================================================================
+   4. STRUCTURE DES PAGES DU TABLEAU DE BORD (`content-container`)
+   ========================================================================== */
+.content-container {
+    max-width: 1100px;
+    margin: 35px auto;
+    padding: 25px;
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
+}
+
+.content-container h1 {
+    color: var(--primary-color);
+    font-size: 26px;
+    margin-bottom: 25px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 12px;
+}
+
+.form-section, .list-section, .summary-section {
+    background: #f9fafb;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    margin-bottom: 30px;
+    border: 1px solid var(--border-color);
+}
+
+.form-section h2, .list-section h2, .summary-section h2 {
+    color: var(--primary-color);
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+/* ==========================================================================
+   5. FORMULAIRES, ALIGNEMENTS & ENTRÉES DE DONNÉES
+   ========================================================================== */
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 14px;
+    background-color: #ffffff;
+    transition: var(--transition);
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* Formulaire Horizontal Alignement (ex: Création Catway & Users) */
+.horizontal-form {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.horizontal-form input,
+.horizontal-form select {
+    flex: 1;
+    min-width: 160px;
+    width: auto;
+}
+
+/* Formulaire Vertical Empilé (ex: Réservations) */
+.vertical-form .form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.vertical-form .form-row .form-group {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+/* Edition en ligne (Mise à jour rapide intégrée au tableau d'affichage) */
+.inline-edit-form {
+    display: flex;
+    gap: 8px;
+    max-width: 280px;
+}
+
+.inline-edit-form input {
+    padding: 5px 8px;
+    font-size: 13px;
+}
+
+/* ==========================================================================
+   6. TABLEAUX DE DONNÉES LIVRABLES (`data-table`)
+   ========================================================================== */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.data-table th, .data-table td {
+    border: 1px solid var(--border-color);
+    padding: 12px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.data-table th {
+    background-color: #f3f4f6;
+    color: var(--text-color);
+    font-weight: 700;
+}
+
+.data-table tr:hover {
+    background-color: #f1f5f9;
+}
+
+code {
+    background: #f1f5f9;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: monospace;
+    color: #b91c1c;
+}
+
+/* ==========================================================================
+   7. BOUTONS & ELEMENTS GRAPHIQUES (CRUD ACTIONS)
+   ========================================================================== */
+button, .btn-submit, .btn-logout, .btn-add, .btn-update, .btn-delete {
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    transition: var(--transition);
+    display: inline-block;
+    text-align: center;
+}
+
+button:hover, .btn-submit:hover, .btn-logout:hover, .btn-add:hover, .btn-update:hover, .btn-delete:hover {
+    opacity: 0.9;
+}
+
+/* Bouton Session d'accueil */
+.btn-submit {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--primary-color);
+    color: #ffffff;
+    font-size: 15px;
+    margin-top: 5px;
+}
+
+/* Déconnexion */
+.btn-logout {
+    background-color: var(--danger-color);
+    padding: 6px 12px;
+    color: #ffffff;
+    font-size: 13px;
+}
+
+/* Ajouts de données (CRUD: Create) */
+.btn-add {
+    background-color: var(--accent-color);
+    color: #ffffff;
+    padding: 8px 16px;
+}
+
+/* Sauvegardes / Modifications (CRUD: Update) */
+.btn-update {
+    background-color: var(--secondary-color);
+    color: #ffffff;
+    padding: 6px 12px;
+    font-size: 13px;
+}
+
+/* Suppressions (CRUD: Delete) */
+.btn-delete {
+    background-color: var(--danger-color);
+    color: #ffffff;
+    padding: 6px 12px;
+    font-size: 13px;
+}
+
+/* Badges graphiques */
+.badge {
+    display: inline-block;
+    background-color: #e5e7eb;
+    color: #4b5563;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* Bandeau Alerte Erreur (Login / Validation) */
+.alert-error {
+    background-color: #fee2e2;
+    color: #991b1b;
+    padding: 12px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    text-align: left;
+    border-left: 4px solid var(--danger-color);
+}
+
+/* ==========================================================================
+   8. MEDIA QUERIES (RESPONSIVE STRUCTURAL)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .main-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    .horizontal-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .vertical-form .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}

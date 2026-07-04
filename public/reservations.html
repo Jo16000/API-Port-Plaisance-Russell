@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Réservations - Port de Plaisance Russell</title>
+  <meta name="description" content="Page permettant de consulter et créer des réservations pour un catway du Port de Plaisance Russell.">
+</head>
+
+<body>
+  <h2>Réservations du catway</h2>
+
+  <!-- Liste des réservations -->
+  <div id="reservations"></div>
+
+  <h3>Créer une réservation</h3>
+
+  <form id="reservationForm">
+    <label for="email">Email utilisateur :</label><br>
+    <input type="email" id="email" required><br><br>
+
+    <label for="dateDebut">Date de début :</label><br>
+    <input type="date" id="dateDebut" required><br><br>
+
+    <label for="dateFin">Date de fin :</label><br>
+    <input type="date" id="dateFin" required><br><br>
+
+    <button type="submit">Réserver</button>
+  </form>
+
+  <p><a href="catways.html">Retour aux catways</a></p>
+  <p><a href="index.html">Retour à l'accueil</a></p>
+
+  <script src="js/reservations.js"></script>
+</body>
+</html>
