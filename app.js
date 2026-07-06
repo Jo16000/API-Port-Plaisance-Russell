@@ -1,7 +1,10 @@
 // ==========================================
 // 1. CONFIGURATION DES VARIABLES D'ENVIRONNEMENT
 // ==========================================
-require('dotenv').config({ override: true });
+// On n'utilise dotenv qu'en mode développement (sur ton PC local)
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config({ override: true });
+}
 
 // ==========================================
 // 2. IMPORTATIONS DES MODULES ET PACKAGES
@@ -70,19 +73,19 @@ app.use((err, req, res, next) => {
 });
 
 // ==========================================
-// 6. CONNEXION MONGODB LOCAL & LANCEMENT DU SERVEUR
+// 6. CONNEXION MONGODB & LANCEMENT DU SERVEUR
 // ==========================================
-// Nous forçons l'adresse locale directement ici pour contourner les bugs de cache d'environnement
-const MONGO_URI = "mongodb://127.0.0.1:27017/port-plaisance-russell";
+// Utilise en priorité process.env.MONGO_URI injecté par Render, sinon l'adresse locale par défaut
+const MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/port-plaisance-russell";
 const PORT = process.env.PORT || 3000;
 
 mongoose.connect(MONGO_URI)
   .then(() => {
-    console.log("✅ Connexion réussie à la base de données MongoDB locale !");
+    console.log("✅ Connexion réussie à la base de données MongoDB !");
     
     // Le serveur ne démarre que si la base de données répond présente
     app.listen(PORT, () => {
-      console.log(`🚀 Serveur de la Capitainerie lancé sur http://localhost:${PORT}`);
+      console.log(`🚀 Serveur lancé avec succès sur le port : ${PORT}`);
     });
   })
   .catch((err) => {
