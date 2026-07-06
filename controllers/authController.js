@@ -1,4 +1,4 @@
-const User = require('../models/user');
+const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 // ÉTAPE 2 : Utilisation de bcryptjs pour la comparaison de mot de passe sécurisée
 const bcrypt = require('bcryptjs');
