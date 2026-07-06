@@ -1,7 +1,6 @@
-const User = require('../models/userModel');
+const User = require('../models/userModel'); // On utilise bien le bon nom de fichier avec le 'M' majuscule
 const jwt = require('jsonwebtoken');
-// ÉTAPE 2 : Utilisation de bcryptjs pour la comparaison de mot de passe sécurisée
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs'); // Utilisation de bcryptjs pour éviter le crash ELF sur Render
 
 /**
  * Gère la connexion de l'utilisateur (Personnel de la capitainerie)
@@ -14,11 +13,10 @@ exports.login = async (req, res) => {
         // 1. Vérifier si l'utilisateur existe
         const user = await User.findOne({ email });
         if (!user) {
-            // Si l'utilisateur n'existe pas, on recharge la page d'accueil avec une erreur
             return res.status(401).render('index', { error: 'Email ou mot de passe incorrect.' });
         }
 
-        // 2. Vérifier si le mot de passe correspond à la version hachée
+        // 2. Vérifier si le mot de passe correspond
         const isMatch = await user.comparePassword(password);
         if (!isMatch) {
             return res.status(401).render('index', { error: 'Email ou mot de passe incorrect.' });
@@ -33,12 +31,12 @@ exports.login = async (req, res) => {
 
         // 4. Stocker le JWT dans un cookie HTTP-Only sécurisé
         res.cookie('token', token, {
-            httpOnly: true, // Protège le cookie contre les attaques XSS
-            secure: process.env.NODE_ENV === 'production', // Active le HTTPS uniquement en production (Render)
-            maxAge: 2 * 60 * 60 * 1000 // Expire après 2 heures
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: 2 * 60 * 60 * 1000
         });
 
-        // 5. Redirection vers le tableau de bord demandée par le brief
+        // 5. Redirection vers le tableau de bord
         return res.redirect('/dashboard');
 
     } catch (error) {
@@ -48,12 +46,36 @@ exports.login = async (req, res) => {
 };
 
 /**
+ * Gère la création de compte (Requis par authRoutes.js)
+ * Route: POST /register
+ */
+exports.register = async (req, res) => {
+    try {
+        const { username, email, password } = req.body;
+
+        // Vérifier si l'utilisateur existe déjà
+        const userExists = await User.findOne({ email });
+        if (userExists) {
+            return res.status(400).render('index', { error: 'Cet email est déjà utilisé.' });
+        }
+
+        // Créer l'utilisateur
+        const newUser = new User({ username, email, password });
+        await newUser.save();
+
+        // Rediriger vers l'accueil avec un message ou connecter directement
+        return res.redirect('/');
+    } catch (error) {
+        console.error(error);
+        return res.status(500).render('index', { error: "Erreur lors de l'inscription." });
+    }
+};
+
+/**
  * Gère la déconnexion de l'utilisateur
  * Route: GET /logout
  */
 exports.logout = (req, res) => {
-    // Supprime le cookie contenant le jeton JWT
     res.clearCookie('token');
-    // Redirection immédiate vers la page d'accueil demandée par le brief
     return res.redirect('/');
 };
